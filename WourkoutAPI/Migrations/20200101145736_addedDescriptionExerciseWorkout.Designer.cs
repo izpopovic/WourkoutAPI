@@ -9,8 +9,8 @@ using WourkoutAPI.Data;
 namespace WourkoutAPI.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20191226203112_addUniqeConstraint")]
-    partial class addUniqeConstraint
+    [Migration("20200101145736_addedDescriptionExerciseWorkout")]
+    partial class addedDescriptionExerciseWorkout
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,9 +28,6 @@ namespace WourkoutAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Duration")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -81,6 +78,16 @@ namespace WourkoutAPI.Migrations
 
                     b.Property<int>("WorkoutId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("Reps")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sets")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ExerciseId", "WorkoutId");
 
@@ -166,11 +173,14 @@ namespace WourkoutAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(150)")
-                        .HasMaxLength(150);
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsPredefined")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

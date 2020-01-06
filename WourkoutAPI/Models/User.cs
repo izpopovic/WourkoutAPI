@@ -20,6 +20,10 @@ namespace WourkoutAPI.Models
 		public double Weight { get; set; }
 		[Required]
 		public double Height { get; set; }
+		//[EmailAddress]
+		//[Required]
+		//public string Email { get; set; }
+		//[Required]
 		public virtual ICollection<UserWorkout> UserWorkouts { get; set; }
 		public virtual ICollection<Planner> Planners { get; set; }
 	}

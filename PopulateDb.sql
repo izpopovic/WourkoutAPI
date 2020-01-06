@@ -28,12 +28,11 @@ values ('Cardio',0)
 insert into ExerciseCategory 
 values ('Compound exercises',0)
 
-select * from ExerciseCategory
-
 --//////////////////////////////////////////////////////////
 ---EXERCISES------------------------------------------------
 --//////////////////////////////////////////////////////////
 ---CHEST----------------------------------------------------
+
 insert into Exercises
 values ('Flat barbell bench press',1,0)
 insert into Exercises
@@ -56,7 +55,10 @@ insert into Exercises
 values ('Incline dumbell flye',1,0)
 insert into Exercises
 values ('Decline dumbell flye',1,0)
-
+insert into Exercises
+values ('Cable cross-over',1,0)
+insert into Exercises
+values ('Seated chest press',1,0)
 -- In case you want to reset id count
 --DBCC CHECKIDENT ('Exercises', RESEED, 0);
 --GO
@@ -197,8 +199,6 @@ values('Dumbbell side bend',5,0)
 insert into Exercises
 values('Side plank',5,0)
 insert into Exercises
-values('Reverse crunch',5,0)
-insert into Exercises
 values('Alternating toe reach',5,0)
 insert into Exercises
 values('Windshield wipers',5,0)
@@ -277,8 +277,6 @@ insert into Exercises
 values('Machine squat',7,0)
 insert into Exercises
 values('Dumbbell squat',7,0)
-insert into Exercises
-values('Front squat',7,0)
 insert into Exercises
 values('Kettlebell pistol squat',7,0)
 insert into Exercises
@@ -394,3 +392,113 @@ insert into Exercises
 values('Battle ropes',10,0)
 
 
+--//////////////////////////////////////////////////////////
+---WORKOUT--------------------------------------------------
+--//////////////////////////////////////////////////////////
+---WORKOUT DIFFICULTIES-------------------------------------
+
+insert into WorkoutDifficulties
+values('Beginner')
+insert into WorkoutDifficulties
+values('Intermediate')
+insert into WorkoutDifficulties
+values('Advanced')
+
+--//////////////////////////////////////////////////////////
+---WORKOUT--------------------------------------------------
+--//////////////////////////////////////////////////////////
+---WORKOUT TYPE---------------------------------------------
+
+insert into WorkoutTypes
+values('Strength',0)
+insert into WorkoutTypes
+values('Cardio',0)
+insert into WorkoutTypes
+values('Custom',0)
+
+select * from ExerciseCategory
+select * from Exercises
+select * from WorkoutDifficulties order by Id
+select * from WorkoutTypes
+
+
+--//////////////////////////////////////////////////////////
+---WORKOUT--------------------------------------------------
+--//////////////////////////////////////////////////////////
+---PREDEFINED WORKOUTS--------------------------------------
+select * from Workouts
+select * from WorkoutTypes
+select * from WorkoutDifficulties
+
+delete from Workouts
+
+DBCC CHECKIDENT ('Workouts', RESEED, 0);
+GO
+
+insert into Workouts
+values ('3 Day Strength Workout',
+'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+45,1,1,0)
+
+
+--//////////////////////////////////////////////////////////
+---EXERCISE WORKOUT-----------------------------------------
+--//////////////////////////////////////////////////////////
+---PREDEFINED WORKOUTS--------------------------------------
+select * from ExerciseWorkout
+select * from Exercises where CategoryId = 4
+select * from ExerciseCategory
+
+-- DAY 1
+-- Chest
+insert into ExerciseWorkout
+values(2,1,'10','3','Have your bench at a 30 degree angle.')
+insert into ExerciseWorkout
+values(4,1,'10','4','')
+
+-- Triceps
+insert into ExerciseWorkout
+values(15,1,'Failure','3','Make sure you lean forward to focus the work on your lower chest. Use assisted dip machine if you cannot do bodyweight.')
+insert into ExerciseWorkout
+values(17,1,'10','4','Light weights only, focus on form.')
+
+-- DAY 2
+-- Back
+insert into ExerciseWorkout
+values(90,1,'10','4','')
+insert into ExerciseWorkout
+values(95,1,'12','3','')
+insert into ExerciseWorkout
+values(87,1,'10','3','')
+
+-- Biceps
+insert into ExerciseWorkout
+values(28,1,'10','3','You can also use EZ bar.')
+
+-- DAY 3
+-- Legs
+insert into ExerciseWorkout
+values(110,1,'12,10,10,8','4','First do 12 reps with lower weight, then increase the weight and lower the number of reps.')
+insert into ExerciseWorkout
+values(115,1,'12','3','')
+insert into ExerciseWorkout
+values(116,1,'12','3','')
+
+-- Shoulders
+
+insert into ExerciseWorkout
+values(40,1,'8-10','4','')
+insert into ExerciseWorkout
+values(38,1,'10','3','')
+
+
+
+--//////////////////////////////////////////////////////////
+---USER-----------------------------------------------------
+--//////////////////////////////////////////////////////////
+---TEST USER------------------------------------------------
+
+select * from Users
+
+insert into Users
+values('',)

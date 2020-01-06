@@ -2,37 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WourkoutAPI.Data;
 using WourkoutAPI.Models;
 
 namespace WourkoutAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class ExerciseController : ControllerBase
+	public class ExercisesController : ControllerBase
 	{
 		private ApiDbContext _apiDbContext;
 
-		public ExerciseController(ApiDbContext apiDbContext)
+		public ExercisesController(ApiDbContext apiDbContext)
 		{
 			_apiDbContext = apiDbContext;
 		}
 
 		// GET: api/Exercise
 		[HttpGet]
+		[Authorize]
 		public IActionResult Get()
 		{
 			// Need to ensure not to pull all exercises at once
 			// Possible caching with paging algorithm needed
-			return Ok(_apiDbContext.Exercises);
+			var exercises = _apiDbContext.Exercises;
+			if (exercises != null)
+			{
+				return Ok(exercises.Include("Category"));
+			}
+			else
+			{
+				return StatusCode(StatusCodes.Status404NotFound);
+			}
 		}
 
 		// GET: api/Exercise/5
 		[HttpGet("{id}", Name = "GetExercise")]
 		public IActionResult Get(int id)
 		{
-			var exercise = _apiDbContext.Exercises.Find(id);
+			var exercise = _apiDbContext.Exercises.Include("Category").FirstOrDefault(e => e.Id == id);
 			if (exercise == null)
 			{
 				return NotFound("Exercise not found! Try with a different one...");

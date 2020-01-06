@@ -9,8 +9,8 @@ using WourkoutAPI.Data;
 namespace WourkoutAPI.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20191226203112_addUniqeConstraint")]
-    partial class addUniqeConstraint
+    [Migration("20191229204532_addPredefinedWorkoutSupport")]
+    partial class addPredefinedWorkoutSupport
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,9 +28,6 @@ namespace WourkoutAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Duration")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -80,6 +77,12 @@ namespace WourkoutAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("WorkoutId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Reps")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sets")
                         .HasColumnType("int");
 
                     b.HasKey("ExerciseId", "WorkoutId");
@@ -171,6 +174,9 @@ namespace WourkoutAPI.Migrations
 
                     b.Property<int>("Duration")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsPredefined")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()

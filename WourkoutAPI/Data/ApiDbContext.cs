@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WourkoutAPI.Models;
 
-namespace WourkoutAPI.Models
+namespace WourkoutAPI.Data
 {
 	public class ApiDbContext : DbContext
 	{
@@ -15,6 +16,7 @@ namespace WourkoutAPI.Models
 		public DbSet<Workout> Workouts { get; set; }
 		public DbSet<Planner> Planners { get; set; }
 		public DbSet<User> Users { get; set; }
+		public DbSet<Account> Accounts { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
