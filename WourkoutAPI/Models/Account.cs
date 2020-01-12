@@ -20,6 +20,6 @@ namespace WourkoutAPI.Models
 		//[Required]
 		[StringLength(50)]
 		public string Salt { get; set; }
-		public User User { get; set; }
+		public virtual User User { get; set; }
 	}
 }

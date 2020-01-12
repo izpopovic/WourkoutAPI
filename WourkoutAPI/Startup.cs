@@ -70,7 +70,6 @@ namespace WourkoutAPI
 			});
 
 
-
 			services.AddControllers();
 		}
 

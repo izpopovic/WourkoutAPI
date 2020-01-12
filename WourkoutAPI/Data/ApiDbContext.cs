@@ -57,6 +57,9 @@ namespace WourkoutAPI.Data
 			modelBuilder.Entity<WorkoutType>()
 				.HasIndex(wt => wt.Name)
 				.IsUnique();
+			modelBuilder.Entity<Account>()
+				.HasIndex(a => a.UserName)
+				.IsUnique();
 		}
 	}
 }

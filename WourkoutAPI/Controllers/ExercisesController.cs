@@ -41,7 +41,7 @@ namespace WourkoutAPI.Controllers
 		}
 
 		// GET: api/Exercise/5
-		[HttpGet("{id}", Name = "GetExercise")]
+		[HttpGet("{id}")]
 		public IActionResult Get(int id)
 		{
 			var exercise = _apiDbContext.Exercises.Include("Category").FirstOrDefault(e => e.Id == id);
@@ -55,6 +55,7 @@ namespace WourkoutAPI.Controllers
 			}
 		}
 
+		#region Post, Put, Delete
 		// For now don't allow adding of new exercises
 		// POST: api/Exercise
 		//[HttpPost]
@@ -83,5 +84,6 @@ namespace WourkoutAPI.Controllers
 		//public void Delete(int id)
 		//{
 		//}
+		#endregion
 	}
 }
