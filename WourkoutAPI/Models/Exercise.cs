@@ -17,7 +17,6 @@ namespace WourkoutAPI.Models
 		[Required]
 		[JsonIgnore]
 		public bool UserMade { get; set; }
-		[Required]
 		public virtual ExerciseCategory Category { get; set; }
 		public virtual ICollection<ExerciseWorkout> ExerciseWorkouts { get; set; }
 	}

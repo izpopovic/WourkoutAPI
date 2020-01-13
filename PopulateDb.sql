@@ -403,6 +403,8 @@ insert into WorkoutDifficulties
 values('Intermediate')
 insert into WorkoutDifficulties
 values('Advanced')
+insert into WorkoutDifficulties
+values('Custom')
 
 --//////////////////////////////////////////////////////////
 ---WORKOUT--------------------------------------------------

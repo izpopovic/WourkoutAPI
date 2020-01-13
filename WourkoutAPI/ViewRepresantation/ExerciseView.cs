@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WourkoutAPI.Models
+namespace WourkoutAPI.ViewRepresantation
 {
-	public class ExerciseWorkout
-	{
+	public class ExerciseView
+	{ 
 		[StringLength(50)]
 		public string Reps { get; set; }
 		[StringLength(50)]
@@ -15,10 +15,5 @@ namespace WourkoutAPI.Models
 		public double Weight { get; set; }
 		[StringLength(1000)]
 		public string Description { get; set; }
-		public int WorkoutId { get; set; }
-		public virtual Workout Workout { get; set; }
-		public int ExerciseId { get; set; }
-		public virtual Exercise Exercise { get; set; }
-
 	}
 }
