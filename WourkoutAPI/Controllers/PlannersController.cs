@@ -22,18 +22,6 @@ namespace WourkoutAPI.Controllers
 			_apiDbContext = apiDbContext;
 		}
 
-		// Get specific planner with date and quicknotes
-		// GET: api/Planner/5
-		//[Authorize]
-		//[HttpGet("[action]/{plannerId}", Name = "GetPlanner")]
-		//public IActionResult GetPlanner(int plannerId)
-		//{
-		//	var planner = 
-		//}
-
-		// Get all plans for specific userId
-		//GET: api/User/{userId}/planners
-
 		[Authorize]
 		[HttpGet]
 		public IActionResult Get(int userId)
@@ -52,12 +40,6 @@ namespace WourkoutAPI.Controllers
 		[HttpPost]
 		public IActionResult Post([FromBody] PlannerView view)
 		{
-			// Should i validate every view?
-			//if (view == null)
-			//{
-			//	return StatusCode(StatusCodes.Status406NotAcceptable);
-			//}
-
 			var user = _apiDbContext.Users.Include(u => u.Planners).FirstOrDefault(u => u.Id == view.UserId);
 			if (user == null)
 				return NotFound("User not found!");
@@ -76,7 +58,6 @@ namespace WourkoutAPI.Controllers
 
 			else
 				return StatusCode(StatusCodes.Status400BadRequest);
-
 		}
 
 		// PUT: api/User/{userId}/planners/5

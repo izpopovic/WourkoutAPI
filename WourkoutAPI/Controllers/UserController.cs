@@ -32,22 +32,6 @@ namespace WourkoutAPI.Controllers
 			_jwtSettings = jwtSettings.Value;
 		}
 
-		#region GETNPOST
-		// GET: api/User
-		//[HttpGet]
-		//public IEnumerable<string> Get()
-		//{
-		//	return new string[] { "value1", "value2" };
-		//}
-
-		//GET: api/User/5
-		// POST: api/User
-		//[HttpPost]
-		//public void Post([FromBody] string value)
-		//{
-		//}
-		#endregion
-
 		[Authorize]
 		[HttpGet("{userId}")]
 		public IActionResult Get(int userId)
@@ -70,8 +54,6 @@ namespace WourkoutAPI.Controllers
 			//// Make an function for getting authorization header out of tokenž
 			//var token = TokenHelpers.GetValueFromHeader(request.Headers, "Authorization");
 			#endregion
-
-
 			var user = _apiDbContext.Users.FirstOrDefault(u => u.Id == userId);
 
 			if (user == null)

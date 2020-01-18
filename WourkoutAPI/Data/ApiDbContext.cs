@@ -21,8 +21,8 @@ namespace WourkoutAPI.Data
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			// Exercise - Workout (many to many relation)
-			modelBuilder.Entity<ExerciseWorkout>()
-				.HasKey(ew => new { ew.ExerciseId, ew.WorkoutId});
+			//modelBuilder.Entity<ExerciseWorkout>()
+			//	.HasKey(ew => new { ew.ExerciseId, ew.WorkoutId});
 			modelBuilder.Entity<ExerciseWorkout>()
 				.HasOne(ew => ew.Workout)
 				.WithMany(w => w.ExerciseWorkouts)
@@ -31,6 +31,7 @@ namespace WourkoutAPI.Data
 				.HasOne(ew => ew.Exercise)
 				.WithMany(e => e.ExerciseWorkouts)
 				.HasForeignKey(ew => ew.ExerciseId);
+				//.OnDelete(DeleteBehavior.Cascade);
 
 			// Workout - User (many to many relation)
 			modelBuilder.Entity<UserWorkout>()

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WourkoutAPI.Models
 {
 	public class ExerciseWorkout
 	{
+		public int Id { get; set; }
 		[StringLength(50)]
 		public string Reps { get; set; }
 		[StringLength(50)]
@@ -16,8 +14,10 @@ namespace WourkoutAPI.Models
 		[StringLength(1000)]
 		public string Description { get; set; }
 		public int WorkoutId { get; set; }
+		[JsonIgnore]
 		public virtual Workout Workout { get; set; }
 		public int ExerciseId { get; set; }
+		[JsonIgnore]
 		public virtual Exercise Exercise { get; set; }
 
 	}

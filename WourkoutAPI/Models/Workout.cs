@@ -18,11 +18,15 @@ namespace WourkoutAPI.Models
 		public string Description { get; set; }
 		[Required]
 		public int Duration { get; set; }
+		[JsonIgnore]
 		public virtual WorkoutType WorkoutType { get; set; }
 		[JsonIgnore]
 		public virtual WorkoutDifficulty WorkoutDifficulty { get; set; }
+		[JsonIgnore]
 		public bool IsPredefined { get; set; }
+		[JsonIgnore]
 		public virtual ICollection<ExerciseWorkout> ExerciseWorkouts { get; set; }
+		[JsonIgnore]
 		public virtual ICollection<UserWorkout> UserWorkouts { get; set; }
 	}
 }
