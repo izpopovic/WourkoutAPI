@@ -451,6 +451,7 @@ select * from ExerciseWorkout
 select * from Exercises where CategoryId = 4
 select * from ExerciseCategory
 
+-- EASY WORKOUT
 -- DAY 1
 -- Chest
 insert into ExerciseWorkout
@@ -492,6 +493,8 @@ insert into ExerciseWorkout
 values(40,1,'8-10','4','')
 insert into ExerciseWorkout
 values(38,1,'10','3','')
+
+--INTERMEDIATE WORKOUT
 
 
 
