@@ -14,17 +14,17 @@ namespace WourkoutAPI.ViewRepresantation
 		[Required]
 		[StringLength(50)]
 		public string Password { get; set; }
-		[Required]
+		//[Required]
 		[StringLength(60)]
 		public string Name { get; set; }
-		[Required]
+		//[Required]
 		[DataType(DataType.Date)]
 		public DateTime DateOfBirth { get; set; }
-		[Required]
+		//[Required]
 		public int Height { get; set; }
-		[Required]
+		//[Required]
 		public double Weight { get; set; }
-		[Required]
+		//[Required]
 		public double BMI { get; set; }
 	}
 }

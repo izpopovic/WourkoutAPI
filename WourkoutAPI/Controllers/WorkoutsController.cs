@@ -25,36 +25,60 @@ namespace WourkoutAPI.Controllers
 			_apiDbContext = apiDbContext;
 		}
 		// ALSO CREATE ENDPOINT TO GET PREDEFINED WORKOUT DATA FOR EXERCISES!
-
-		// GET: api/User/2/Workouts/PredefinedWorkouts
-		// Getting predefined workouts
-		// Logic for getting predefined workouts based on height, weight and BMI
 		[Authorize]
-		[HttpGet("[action]/workouttype/{workoutTypeId}/workoutDifficulty/{workoutDifficultyId}")]
+		[HttpGet("[action]/workouttype/{workoutTypeId}/workoutDifficulty/{workoutDifficultyId}/days")]
 		public IActionResult PredefinedWorkouts(int userId, int workoutTypeId, int workoutDifficultyId)
 		{
 			var user = _apiDbContext.Users.FirstOrDefault(u => u.Id == userId);
 			if (user == null)
 				return NotFound("User not found!");
 
-			// Get Strength or Cardio predefined workout
-			//var predefinedWorkouts = _apiDbContext.Workouts.Where(w => w.IsPredefined == true && w.WorkoutType.Id == workoutTypeId);
-			// Who should be doing calculations of user hieght weight and BMI,
-			// and depending on the info offer the best workout?
-			// server side or client side?
 			var predefinedWorkout = _apiDbContext.Workouts
-				.FirstOrDefault(w => w.IsPredefined == true &&
+				.Include(w => w.ExerciseWorkouts)
+				.ThenInclude(ew => ew.Exercise)
+				.ThenInclude(e => e.Category)
+				.Where(w => w.IsPredefined == true &&
 								w.WorkoutType.Id == workoutTypeId &&
 								w.WorkoutDifficulty.Id == workoutDifficultyId);
+			if (predefinedWorkout == null)
+			{
+				return NotFound("There is no predefined workout available");
+			}
+			var workoutDays = predefinedWorkout.Select(w => w.WorkoutDay);
+			if (workoutDays == null)
+			{
+				return NotFound("No workout days found!");
+			}
+			var numberOfDays = workoutDays.Count();
+			return Ok(new { numberOfDays });
+		}
+
+
+		[Authorize]
+		[HttpGet("[action]/workouttype/{workoutTypeId}/workoutDifficulty/{workoutDifficultyId}/day/{workoutDay}")]
+		public IActionResult PredefinedWorkouts(int userId, int workoutTypeId, int workoutDifficultyId, int workoutDay)
+		{
+			var user = _apiDbContext.Users.FirstOrDefault(u => u.Id == userId);
+			if (user == null)
+				return NotFound("User not found!");
+
+			var predefinedWorkout = _apiDbContext.Workouts
+				.Include(w => w.ExerciseWorkouts)
+				.ThenInclude(ew => ew.Exercise)
+				//.ThenInclude(e => e.Category)
+				.FirstOrDefault(w => w.IsPredefined == true &&
+								w.WorkoutType.Id == workoutTypeId &&
+								w.WorkoutDifficulty.Id == workoutDifficultyId &&
+								w.WorkoutDay == workoutDay);
 
 			if (predefinedWorkout == null)
 			{
-				return NotFound("There is no predefined workout of that type available");
+				return NotFound("There is no predefined workout available");
 			}
 			return Ok(predefinedWorkout);
 		}
 
-		
+
 		// Returns all workouts of that user
 		// GET: api/User/1/Workouts
 		[Authorize]

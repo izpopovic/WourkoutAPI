@@ -16,6 +16,7 @@ namespace WourkoutAPI.Models
 		public string Name { get; set; }
 		[StringLength(1000)]
 		public string Description { get; set; }
+		public int WorkoutDay { get; set; }
 		[Required]
 		public int Duration { get; set; }
 		[JsonIgnore]
@@ -24,7 +25,8 @@ namespace WourkoutAPI.Models
 		public virtual WorkoutDifficulty WorkoutDifficulty { get; set; }
 		[JsonIgnore]
 		public bool IsPredefined { get; set; }
-		[JsonIgnore]
+
+		//[JsonIgnore]
 		public virtual ICollection<ExerciseWorkout> ExerciseWorkouts { get; set; }
 		[JsonIgnore]
 		public virtual ICollection<UserWorkout> UserWorkouts { get; set; }

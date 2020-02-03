@@ -98,7 +98,7 @@ namespace WourkoutAPI.Controllers
 		[AllowAnonymous]
 		[HttpPost("[action]")]
 		public async Task<IActionResult> Register([FromBody] RegistrationView view)
-		{
+		   {
 			var account = new Account();
 			var user = new User();
 
@@ -112,7 +112,8 @@ namespace WourkoutAPI.Controllers
 			// If user account already exists
 			if (existingAccount.UserName != null && existingAccount.UserName == view.Username)
 			{
-				return StatusCode(StatusCodes.Status409Conflict);
+				//return StatusCode(StatusCodes.Status409Conflict,"Username already exists!");
+				return Conflict("Username already exists!");
 			}
 
 			// Account information
@@ -131,8 +132,12 @@ namespace WourkoutAPI.Controllers
 
 			_apiDbContext.Accounts.Add(account);
 			_apiDbContext.Users.Add(user);
-			
-			if (_apiDbContext.SaveChanges() > 0) return StatusCode(StatusCodes.Status201Created);
+
+			if (_apiDbContext.SaveChanges() > 0)
+			{
+				var jwt = GenerateAccessToken(user.Id, account.UserName);
+				return Ok(new { token = jwt });
+			}
 
 			else return StatusCode(StatusCodes.Status400BadRequest);
 		}

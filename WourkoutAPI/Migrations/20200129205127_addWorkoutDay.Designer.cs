@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WourkoutAPI.Data;
 
 namespace WourkoutAPI.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200129205127_addWorkoutDay")]
+    partial class addWorkoutDay
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,6 +135,9 @@ namespace WourkoutAPI.Migrations
                     b.Property<double>("Weight")
                         .HasColumnType("float");
 
+                    b.Property<int>("WorkoutDay")
+                        .HasColumnType("int");
+
                     b.Property<int>("WorkoutId")
                         .HasColumnType("int");
 
@@ -235,9 +240,6 @@ namespace WourkoutAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
-
-                    b.Property<int>("WorkoutDay")
-                        .HasColumnType("int");
 
                     b.Property<int?>("WorkoutDifficultyId")
                         .HasColumnType("int");

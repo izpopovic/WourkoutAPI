@@ -17,7 +17,7 @@ namespace WourkoutAPI.Models
 		[JsonIgnore]
 		public virtual Workout Workout { get; set; }
 		public int ExerciseId { get; set; }
-		[JsonIgnore]
+		//[JsonIgnore]
 		public virtual Exercise Exercise { get; set; }
 
 	}

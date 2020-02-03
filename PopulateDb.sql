@@ -432,15 +432,15 @@ select * from Workouts
 select * from WorkoutTypes
 select * from WorkoutDifficulties
 
-delete from Workouts
+--delete from ExerciseWorkout
 
-DBCC CHECKIDENT ('Workouts', RESEED, 0);
-GO
+--DBCC CHECKIDENT ('ExerciseWorkout', RESEED, 0);
+--GO
 
 insert into Workouts
 values ('3 Day Strength Workout',
 'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
-45,1,1,0)
+45,1,1,1,1)
 
 
 --//////////////////////////////////////////////////////////
@@ -455,46 +455,55 @@ select * from ExerciseCategory
 -- DAY 1
 -- Chest
 insert into ExerciseWorkout
-values(2,1,'10','3','Have your bench at a 30 degree angle.')
+values(2,1,'10','3','Have your bench at a 30 degree angle.',0,1)
 insert into ExerciseWorkout
-values(4,1,'10','4','')
+values(4,1,'10','4','',0,1)
 
 -- Triceps
 insert into ExerciseWorkout
-values(15,1,'Failure','3','Make sure you lean forward to focus the work on your lower chest. Use assisted dip machine if you cannot do bodyweight.')
+values(15,1,'Failure','3','Make sure you lean forward to focus the work on your lower chest. Use assisted dip machine if you cannot do bodyweight.',0,1)
 insert into ExerciseWorkout
-values(17,1,'10','4','Light weights only, focus on form.')
+values(17,1,'10','4','Light weights only, focus on form.',0,1)
 
 -- DAY 2
 -- Back
 insert into ExerciseWorkout
-values(90,1,'10','4','')
+values(90,1,'10','4','',0,2)
 insert into ExerciseWorkout
-values(95,1,'12','3','')
+values(95,1,'12','3','',0,2)
 insert into ExerciseWorkout
-values(87,1,'10','3','')
+values(87,1,'10','3','',0,2)
 
 -- Biceps
 insert into ExerciseWorkout
-values(28,1,'10','3','You can also use EZ bar.')
+values(28,1,'10','3','You can also use EZ bar.',0,2)
 
 -- DAY 3
 -- Legs
 insert into ExerciseWorkout
-values(110,1,'12,10,10,8','4','First do 12 reps with lower weight, then increase the weight and lower the number of reps.')
+values(110,1,'12,10,10,8','4','First do 12 reps with lower weight, then increase the weight and lower the number of reps.',0,3)
 insert into ExerciseWorkout
-values(115,1,'12','3','')
+values(115,1,'12','3','',0,3)
 insert into ExerciseWorkout
-values(116,1,'12','3','')
+values(116,1,'12','3','',0,3)
 
 -- Shoulders
 
 insert into ExerciseWorkout
-values(40,1,'8-10','4','')
+values(40,1,'8-10','4','',0,3)
 insert into ExerciseWorkout
-values(38,1,'10','3','')
+values(38,1,'10','3','',0,3)
 
 --INTERMEDIATE WORKOUT
+
+
+--ADVANCED WORKOUT
+
+
+--CARDIO
+--BEGGINER WORKOUT
+--INTERMEDIATE WORKOUT
+--ADVANCED WORKOUT
 
 
 
@@ -503,7 +512,7 @@ values(38,1,'10','3','')
 --//////////////////////////////////////////////////////////
 ---TEST USER------------------------------------------------
 
-select * from Users
+select * from ExerciseWorkout
 
-insert into Users
-values('',)
+select * from Workouts
+
