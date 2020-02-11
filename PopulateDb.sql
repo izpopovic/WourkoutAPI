@@ -437,10 +437,77 @@ select * from WorkoutDifficulties
 --DBCC CHECKIDENT ('ExerciseWorkout', RESEED, 0);
 --GO
 
+--delete from Workouts
+
+--DBCC CHECKIDENT ('Workouts', RESEED, 0);
+--GO
+
+
+	  
+    --  ,[Name]
+    --  ,[Description]
+    --  ,[Duration]
+    --  ,[WorkoutTypeId]
+    --  ,[WorkoutDifficultyId]
+    --  ,[IsPredefined]
+    --  ,[WorkoutDay]
+--insert into Workouts
+--values ('Chest & Triceps',
+--'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+--45,1,1,1,1)
+
+
+--Workouts
+--1. strength, easy, day 1
 insert into Workouts
-values ('3 Day Strength Workout',
+values ('Chest & Triceps',
 'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
 45,1,1,1,1)
+--2. strength, easy, day 2
+insert into Workouts
+values ('Back & Biceps',
+'Have a 10 minute warmup before you begin your workout. Stretch at the end.',
+45,1,1,1,2)
+--3. strength, easy, day 3
+insert into Workouts
+values ('Legs & Shoulders',
+'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+45,1,1,1,3)
+--4. strength, intermediate, day 1
+insert into Workouts
+values ('Chest & Triceps',
+'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+45,1,2,1,1)
+--5. strength, intermediate, day 2
+insert into Workouts
+values ('Chest & Triceps',
+'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+45,1,2,1,2)
+--6. strength, intermediate, day 3
+insert into Workouts
+values ('Chest & Triceps',
+'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+45,1,2,1,3)
+--7. strength, advanced, day 1
+insert into Workouts
+values ('Chest & Triceps',
+'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+45,1,3,1,1)
+--8. strength, advanced, day 2
+insert into Workouts
+values ('Chest & Triceps',
+'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+45,1,3,1,2)
+--9. strength, advanced, day 3
+insert into Workouts
+values ('Chest & Triceps',
+'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+45,1,3,1,3)
+
+
+
+
+
 
 
 --//////////////////////////////////////////////////////////
@@ -455,49 +522,55 @@ select * from ExerciseCategory
 -- DAY 1
 -- Chest
 insert into ExerciseWorkout
-values(2,1,'10','3','Have your bench at a 30 degree angle.',0,1)
+values(2,1,'10','3','Have your bench at a 30 degree angle.',0)
 insert into ExerciseWorkout
-values(4,1,'10','4','',0,1)
+values(4,1,'10','4','',0)
 
 -- Triceps
 insert into ExerciseWorkout
-values(15,1,'Failure','3','Make sure you lean forward to focus the work on your lower chest. Use assisted dip machine if you cannot do bodyweight.',0,1)
+values(15,1,'Failure','3','Make sure you lean forward to focus the work on your lower chest. Use assisted dip machine if you cannot do bodyweight.',0)
 insert into ExerciseWorkout
-values(17,1,'10','4','Light weights only, focus on form.',0,1)
+values(17,1,'10','4','Light weights only, focus on form.',0)
 
 -- DAY 2
 -- Back
 insert into ExerciseWorkout
-values(90,1,'10','4','',0,2)
+values(90,2,'10','4','',0)
 insert into ExerciseWorkout
-values(95,1,'12','3','',0,2)
+values(95,2,'12','3','',0)
 insert into ExerciseWorkout
-values(87,1,'10','3','',0,2)
+values(87,2,'10','3','',0)
 
 -- Biceps
 insert into ExerciseWorkout
-values(28,1,'10','3','You can also use EZ bar.',0,2)
+values(28,2,'10','3','You can also use EZ bar.',0)
 
 -- DAY 3
 -- Legs
 insert into ExerciseWorkout
-values(110,1,'12,10,10,8','4','First do 12 reps with lower weight, then increase the weight and lower the number of reps.',0,3)
+values(110,3,'12,10,10,8','4','First do 12 reps with lower weight, then increase the weight and lower the number of reps.',0)
 insert into ExerciseWorkout
-values(115,1,'12','3','',0,3)
+values(115,3,'12','3','',0)
 insert into ExerciseWorkout
-values(116,1,'12','3','',0,3)
+values(116,3,'12','3','',0)
 
 -- Shoulders
 
 insert into ExerciseWorkout
-values(40,1,'8-10','4','',0,3)
+values(40,3,'8-10','4','',0)
 insert into ExerciseWorkout
-values(38,1,'10','3','',0,3)
+values(38,3,'10','3','',0)
 
 --INTERMEDIATE WORKOUT
 
+-- DAY 1
+-- DAY 2
+-- DAY 3
 
 --ADVANCED WORKOUT
+-- DAY 1
+-- DAY 2
+-- DAY 3
 
 
 --CARDIO
