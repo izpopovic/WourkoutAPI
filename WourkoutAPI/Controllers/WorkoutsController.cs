@@ -112,33 +112,6 @@ namespace WourkoutAPI.Controllers
 
 			return Ok(workouts);
 		}
-
-		// Returns all Exercises of the specific Workout
-		// GET: api/User/1/Workouts/5
-		[Authorize]
-		[HttpGet("{workoutId}", Name = "Get")]
-		public IActionResult Get(int userId, int workoutId)
-		{
-
-			// Find user
-			var user = _apiDbContext.Users.Include(u => u.UserWorkouts).ThenInclude(u => u.Workout).
-				ThenInclude(u => u.ExerciseWorkouts)
-				/*ThenInclude(u => u.Workout.WorkoutDifficulty)*/.FirstOrDefault(u => u.Id == userId);
-			if (user == null)
-				return NotFound("User not found!");
-			// Find workout under workoutId for that user
-
-			var usersWorkout = user.UserWorkouts.FirstOrDefault(uw => uw.WorkoutId == workoutId);
-			if (usersWorkout == null)
-			{
-				return NotFound("Workout not found!");
-			}
-			// Load workout information
-			// Newly created workout can have 0 information on it, dont check nulls
-			var workoutExercises = usersWorkout.Workout.ExerciseWorkouts.Where(ew => ew.WorkoutId == workoutId);
-			return Ok(workoutExercises);
-		}
-
 		// POST: api/User/1/Workouts
 		[Authorize]
 		[HttpPost]
@@ -179,6 +152,103 @@ namespace WourkoutAPI.Controllers
 			else
 				return StatusCode(StatusCodes.Status400BadRequest);
 		}
+
+		// PUT: api/User/1/Workouts/4
+		[Authorize]
+		[HttpPut("{workoutId}")]
+		public IActionResult Put(int userId, int workoutId, [FromBody] WorkoutView workoutView)
+		{
+			var user = _apiDbContext.Users.Include(u => u.UserWorkouts)
+				.ThenInclude(uw => uw.Workout)
+				.FirstOrDefault(u => u.Id == userId);
+			if (user == null)
+				return NotFound("User not found!");
+
+			var workout = user.UserWorkouts.FirstOrDefault(uw => uw.WorkoutId == workoutId)?.Workout;
+			if (workout == null)
+				return NotFound("Workout not found!");
+
+			workout.Name = workoutView.Name;
+			workout.Description = workoutView.Description;
+			workout.Duration = workoutView.Duration;
+
+			if (_apiDbContext.SaveChanges() > 0)
+				return StatusCode(StatusCodes.Status200OK);
+
+			else
+				return StatusCode(StatusCodes.Status400BadRequest);
+		}
+
+		[Authorize]
+		[HttpDelete("{workoutId}")]
+		public IActionResult Delete(int userId, int workoutId)
+		{
+			var user = _apiDbContext.Users.Include(u => u.UserWorkouts)
+				.ThenInclude(uw => uw.Workout)
+				.ThenInclude(w => w.ExerciseWorkouts)
+				.FirstOrDefault(u => u.Id == userId);
+
+			if (user == null)
+				return NotFound("User not found!");
+
+			// Locate workout and associated exercises from UserWorkout
+			var userWorkout = user.UserWorkouts.FirstOrDefault(uw => uw.WorkoutId == workoutId);
+			if (userWorkout == null)
+				return NotFound("Users workout not found!");
+
+			var workout = userWorkout.Workout;
+			if (workout == null)
+				return NotFound("Workout not found!");
+			var workoutExercises = workout.ExerciseWorkouts.Where(ew => ew.WorkoutId == workoutId);
+
+			// Delete all associated exercises (ExerciseWorkout)
+			// Is there a better way*
+			foreach (var item in workoutExercises.ToList())
+			{
+				workout.ExerciseWorkouts.Remove(item);
+			}
+
+			// Delete workout reference from UserWorkout
+			user.UserWorkouts.Remove(userWorkout);
+			// Delete the workout
+			_apiDbContext.Workouts.Remove(workout);
+
+			if (_apiDbContext.SaveChanges() > 0)
+				return StatusCode(StatusCodes.Status200OK);
+
+			else
+				return StatusCode(StatusCodes.Status400BadRequest);
+		}
+
+		// Returns all Exercises of the specific Workout
+		// GET: api/User/1/Workouts/5/exercises
+		[Authorize]
+		[HttpGet("{workoutId}/exercises", Name = "Get")]
+		public IActionResult Get(int userId, int workoutId)
+		{
+
+			// Find user
+			var user = _apiDbContext.Users.Include(u => u.UserWorkouts)
+				.ThenInclude(u => u.Workout)
+				.ThenInclude(u => u.ExerciseWorkouts)
+				.ThenInclude(ew => ew.Exercise)
+				.ThenInclude(e => e.Category)
+				/*ThenInclude(u => u.Workout.WorkoutDifficulty)*/.FirstOrDefault(u => u.Id == userId);
+			if (user == null)
+				return NotFound("User not found!");
+			// Find workout under workoutId for that user
+
+			var usersWorkout = user.UserWorkouts.FirstOrDefault(uw => uw.WorkoutId == workoutId);
+			if (usersWorkout == null)
+			{
+				return NotFound("Workout not found!");
+			}
+			// Load workout information
+			// Newly created workout can have 0 information on it, dont check nulls
+			var workoutExercises = usersWorkout.Workout.ExerciseWorkouts.Where(ew => ew.WorkoutId == workoutId);
+			return Ok(workoutExercises);
+		}
+
 
 		// POST: api/User/1/Workouts/1/exercises/3
 		[Authorize]
@@ -242,32 +312,6 @@ namespace WourkoutAPI.Controllers
 				return StatusCode(StatusCodes.Status400BadRequest);
 		}
 
-		// PUT: api/User/1/Workouts/4
-		[Authorize]
-		[HttpPut("{workoutId}")]
-		public IActionResult Put(int userId, int workoutId, [FromBody] WorkoutView workoutView)
-		{
-			var user = _apiDbContext.Users.Include(u => u.UserWorkouts)
-				.ThenInclude(uw => uw.Workout)
-				.FirstOrDefault(u => u.Id == userId);
-			if (user == null)
-				return NotFound("User not found!");
-
-			var workout = user.UserWorkouts.FirstOrDefault(uw => uw.WorkoutId == workoutId)?.Workout;
-			if (workout == null)
-				return NotFound("Workout not found!");
-
-			workout.Name = workoutView.Name;
-			workout.Description = workoutView.Description;
-			workout.Duration = workoutView.Duration;
-
-			if (_apiDbContext.SaveChanges() > 0)
-				return StatusCode(StatusCodes.Status200OK);
-
-			else
-				return StatusCode(StatusCodes.Status400BadRequest);
-		}
-
 
 		//PUT api/User/1/Workouts/4/exercises/2
 		[Authorize]
@@ -308,47 +352,6 @@ namespace WourkoutAPI.Controllers
 		// If you delete workout, all associated exercises must be deleted too!
 		// If you delete exercise, only that exercise for that workout for that user is deleted!
 		// DELETE: api/User/1/Workouts/5
-		[Authorize]
-		[HttpDelete("{workoutId}")]
-		public IActionResult Delete(int userId, int workoutId)
-		{
-			var user = _apiDbContext.Users.Include(u => u.UserWorkouts)
-				.ThenInclude(uw => uw.Workout)
-				.ThenInclude(w => w.ExerciseWorkouts)
-				.FirstOrDefault(u => u.Id == userId);
-
-			if (user == null)
-				return NotFound("User not found!");
-
-			// Locate workout and associated exercises from UserWorkout
-			var userWorkout = user.UserWorkouts.FirstOrDefault(uw => uw.WorkoutId == workoutId);
-			if (userWorkout == null)
-				return NotFound("Users workout not found!");
-
-			var workout = userWorkout.Workout;
-			if (workout == null)
-				return NotFound("Workout not found!");
-			var workoutExercises = workout.ExerciseWorkouts.Where(ew => ew.WorkoutId == workoutId);
-
-			// Delete all associated exercises (ExerciseWorkout)
-			// Is there a better way*
-			foreach (var item in workoutExercises.ToList())
-			{
-				workout.ExerciseWorkouts.Remove(item);
-			}
-
-			// Delete workout reference from UserWorkout
-			user.UserWorkouts.Remove(userWorkout);
-			// Delete the workout
-			_apiDbContext.Workouts.Remove(workout);
-
-			if (_apiDbContext.SaveChanges() > 0)
-				return StatusCode(StatusCodes.Status200OK);
-
-			else
-				return StatusCode(StatusCodes.Status400BadRequest);
-		}
-
 		// If you delete exercise, only that exercise for that workout for that user is deleted!
 		// DELETE: api/User/1/Workouts/5
 

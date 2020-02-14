@@ -10,13 +10,14 @@ namespace WourkoutAPI.Data
 	public class ApiDbContext : DbContext
 	{
 		public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { }
-		public DbSet<WorkoutType> WorkoutTypes{ get; set; }
+		public DbSet<WorkoutType> WorkoutTypes { get; set; }
 		public DbSet<WorkoutDifficulty> WorkoutDifficulties { get; set; }
 		public DbSet<Exercise> Exercises { get; set; }
 		public DbSet<Workout> Workouts { get; set; }
 		public DbSet<Planner> Planners { get; set; }
 		public DbSet<User> Users { get; set; }
 		public DbSet<Account> Accounts { get; set; }
+		public DbSet<ExerciseCategory> ExerciseCategories { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
@@ -31,11 +32,11 @@ namespace WourkoutAPI.Data
 				.HasOne(ew => ew.Exercise)
 				.WithMany(e => e.ExerciseWorkouts)
 				.HasForeignKey(ew => ew.ExerciseId);
-				//.OnDelete(DeleteBehavior.Cascade);
+			//.OnDelete(DeleteBehavior.Cascade);
 
 			// Workout - User (many to many relation)
 			modelBuilder.Entity<UserWorkout>()
-			.HasKey(uw => new { uw.UserId, uw.WorkoutId});
+			.HasKey(uw => new { uw.UserId, uw.WorkoutId });
 			modelBuilder.Entity<UserWorkout>()
 				.HasOne(uw => uw.Workout)
 				.WithMany(w => w.UserWorkouts)

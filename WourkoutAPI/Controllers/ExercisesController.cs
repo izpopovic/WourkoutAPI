@@ -11,7 +11,7 @@ using WourkoutAPI.Models;
 
 namespace WourkoutAPI.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/User/{userId}/[controller]")]
 	[ApiController]
 	public class ExercisesController : ControllerBase
 	{
@@ -55,6 +55,27 @@ namespace WourkoutAPI.Controllers
 			}
 		}
 
+		[HttpGet("[action]")]
+		[Authorize]
+		public IActionResult GetExerciseCategories()
+		{
+			var exerciseCategories = _apiDbContext.ExerciseCategories;
+			if (exerciseCategories == null)
+				return NotFound("Exercise categories not found");
+			else
+				return Ok(exerciseCategories);
+		}
+
+		[HttpGet("[action]/{categoryId}")]
+		[Authorize]
+		public IActionResult GetExercisesByCategory(int categoryId)
+		{
+			var exercises = _apiDbContext.Exercises.Where(e => e.Category.Id == categoryId);
+			if (exercises == null)
+				return NotFound("Exercise for this category not found");
+			else
+				return Ok(exercises);
+		}
 		#region Post, Put, Delete
 		// For now don't allow adding of new exercises
 		// POST: api/Exercise
@@ -85,5 +106,7 @@ namespace WourkoutAPI.Controllers
 		//{
 		//}
 		#endregion
+
+
 	}
 }
