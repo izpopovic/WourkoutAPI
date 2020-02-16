@@ -40,6 +40,20 @@ namespace WourkoutAPI.Controllers
 			}
 		}
 
+		[HttpGet("[action]/{name}")]
+		[Authorize]
+		public IActionResult FindExerciseByName(string name)
+		{
+			var foundExercise = _apiDbContext.Exercises.FirstOrDefault(e => e.Name == name);
+			if (foundExercise == null)
+				return NotFound("Name of the exercise doesn't exist");
+			else
+			{
+				var id = foundExercise.Id;
+				return Ok(id);
+			}
+		}
+
 		// GET: api/Exercise/5
 		[HttpGet("{id}")]
 		public IActionResult Get(int id)

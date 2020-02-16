@@ -333,7 +333,7 @@ namespace WourkoutAPI.Controllers
 			var workout = userWorkout.Workout;
 			if (workout == null)
 				return NotFound("Workout not found!");
-			var exerciseWorkout = workout.ExerciseWorkouts.FirstOrDefault(ew => ew.ExerciseId == exerciseId);
+			var exerciseWorkout = workout.ExerciseWorkouts.FirstOrDefault(ew => ew.Id == exerciseId);
 			if (exerciseWorkout == null)
 				return NotFound("Exercise for this workout not found!");
 
