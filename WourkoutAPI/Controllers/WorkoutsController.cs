@@ -356,8 +356,8 @@ namespace WourkoutAPI.Controllers
 		// DELETE: api/User/1/Workouts/5
 
 		[Authorize]
-		[HttpDelete("{workoutId}/exercises/{exerciseId}")]
-		public IActionResult Delete(int userId, int workoutId, int exerciseId)
+		[HttpDelete("{workoutId}/exercises/{workoutExerciseId}")]
+		public IActionResult Delete(int userId, int workoutId, int workoutExerciseId)
 		{
 			var user = _apiDbContext.Users.Include(u => u.UserWorkouts)
 				.ThenInclude(uw => uw.Workout)
@@ -377,7 +377,7 @@ namespace WourkoutAPI.Controllers
 			if (workout == null)
 				return NotFound("Workout not found!");
 
-			var workoutExercise = workout.ExerciseWorkouts.FirstOrDefault(ew => ew.ExerciseId == exerciseId);
+			var workoutExercise = workout.ExerciseWorkouts.FirstOrDefault(ew => ew.Id == workoutExerciseId);
 			if (workoutExercise == null)
 				return NotFound("Exercise for this workout not found!");
 

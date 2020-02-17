@@ -7,10 +7,8 @@ namespace WourkoutAPI.Models
 	{
 		[Required]
 		public DateTime PlanningDate { get; set; }
-		[Required]
+		//[Required]
 		[StringLength(2000)]
 		public string QuickNotes { get; set; }
-		[Required]
-		public int UserId { get; set; }
 	}
 }

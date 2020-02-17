@@ -38,9 +38,9 @@ namespace WourkoutAPI.Controllers
 		// POST: api/User/{userId}/planners
 		[Authorize]
 		[HttpPost]
-		public IActionResult Post([FromBody] PlannerView view)
+		public IActionResult Post([FromBody] PlannerView view, int userId)
 		{
-			var user = _apiDbContext.Users.Include(u => u.Planners).FirstOrDefault(u => u.Id == view.UserId);
+			var user = _apiDbContext.Users.Include(u => u.Planners).FirstOrDefault(u => u.Id == userId);
 			if (user == null)
 				return NotFound("User not found!");
 
@@ -51,7 +51,6 @@ namespace WourkoutAPI.Controllers
 			planner.QuickNotes = view.QuickNotes;
 
 			userPlanners.Add(planner);
-			_apiDbContext.SaveChanges();
 
 			if (_apiDbContext.SaveChanges() > 0)
 				return StatusCode(StatusCodes.Status200OK);
