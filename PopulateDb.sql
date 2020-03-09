@@ -5,27 +5,27 @@ go
 ---EXERCISE CATEGORY----------------------------------------
 --//////////////////////////////////////////////////////////
 ------------------------------------------------------------
-insert into ExerciseCategory 
+insert into ExerciseCategories
 values ('Chest',0)
-insert into ExerciseCategory 
+insert into ExerciseCategories 
 values ('Triceps',0)
-insert into ExerciseCategory 
+insert into ExerciseCategories 
 values ('Biceps',0)
-insert into ExerciseCategory 
+insert into ExerciseCategories 
 values ('Shoulders',0)
-insert into ExerciseCategory 
+insert into ExerciseCategories 
 values ('Abs',0)
-insert into ExerciseCategory 
+insert into ExerciseCategories 
 values ('Back',0)
-insert into ExerciseCategory 
+insert into ExerciseCategories 
 values ('Upper legs',0)
-insert into ExerciseCategory 
+insert into ExerciseCategories 
 values ('Glutes',0)
-insert into ExerciseCategory 
+insert into ExerciseCategories 
 values ('Lower legs',0)
-insert into ExerciseCategory 
+insert into ExerciseCategories 
 values ('Cardio',0)
-insert into ExerciseCategory 
+insert into ExerciseCategories 
 values ('Compound exercises',0)
 
 --//////////////////////////////////////////////////////////
@@ -418,8 +418,8 @@ values('Cardio',0)
 insert into WorkoutTypes
 values('Custom',0)
 
-select * from ExerciseCategory
-select * from Exercises
+select * from ExerciseCategories
+select * from Exercises where Exercises.CategoryId = 10
 select * from WorkoutDifficulties order by Id
 select * from WorkoutTypes
 
@@ -431,6 +431,7 @@ select * from WorkoutTypes
 select * from Workouts
 select * from WorkoutTypes
 select * from WorkoutDifficulties
+select * from ExerciseWorkout
 
 --delete from ExerciseWorkout
 
@@ -456,12 +457,11 @@ select * from WorkoutDifficulties
 --'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
 --45,1,1,1,1)
 
-
 --Workouts
 --1. strength, easy, day 1
 insert into Workouts
 values ('Chest & Triceps',
-'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+'Have a 10 minute warmup before you begin your workout.',
 45,1,1,1,1)
 --2. strength, easy, day 2
 insert into Workouts
@@ -471,38 +471,91 @@ values ('Back & Biceps',
 --3. strength, easy, day 3
 insert into Workouts
 values ('Legs & Shoulders',
-'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+'Have a 10 minute warmup before you begin your workout. Stretch at the end.',
 45,1,1,1,3)
+
+
+
+
+
+
 --4. strength, intermediate, day 1
 insert into Workouts
-values ('Chest & Triceps',
-'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
-45,1,2,1,1)
+values ('Chest & Biceps', '', 45,1,2,1,1)
 --5. strength, intermediate, day 2
 insert into Workouts
-values ('Chest & Triceps',
-'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+values ('Legs',
+'Warm up legs with some cardio before workout!',
 45,1,2,1,2)
 --6. strength, intermediate, day 3
 insert into Workouts
-values ('Chest & Triceps',
-'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+values ('Back',
+'',
 45,1,2,1,3)
---7. strength, advanced, day 1
+--6. strength, intermediate, day 4
 insert into Workouts
-values ('Chest & Triceps',
-'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
-45,1,3,1,1)
---8. strength, advanced, day 2
+values ('Shoulders & Triceps',
+'',
+45,1,2,1,4)
+
+--advanced day 1
 insert into Workouts
-values ('Chest & Triceps',
-'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
-45,1,3,1,2)
---9. strength, advanced, day 3
+values ('Chest',
+'Stretch your chest muscles before workout!',
+60,1,3,1,1)
+--advanced day 2
 insert into Workouts
-values ('Chest & Triceps',
-'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
-45,1,3,1,3)
+values ('Back',
+'',
+60,1,3,1,2)
+--advanced day 3
+insert into Workouts
+values ('Shoulders',
+'',
+60,1,3,1,3)
+--advanced day 4
+insert into Workouts
+values ('Arms',
+'',
+60,1,3,1,4)
+--advanced day 5
+insert into Workouts
+values ('Legs',
+'',
+60,1,3,1,5)
+
+----------------------------------------
+select * from Workouts
+--CARDIO EXAMPLE
+-- EASY
+insert into Workouts values ('Cardio', 'Stretch before workout!', 25, 2, 1, 1, 1)
+
+
+--INTERMEDIATE
+insert into Workouts values ('Cardio', 'Take 2 minute rest after each exercise', 40, 2, 2, 1, 1)
+
+
+--ADVANCED
+
+insert into Workouts values ('Cardio', 'Take 1 minute rest after each exercise', 60, 2, 3, 1, 1)
+
+
+
+----7. strength, advanced, day 1
+--insert into Workouts
+--values ('Chest & Triceps',
+--'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+--45,1,3,1,1)
+----8. strength, advanced, day 2
+--insert into Workouts
+--values ('Chest & Triceps',
+--'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+--45,1,3,1,2)
+----9. strength, advanced, day 3
+--insert into Workouts
+--values ('Chest & Triceps',
+--'Designed to hit each muscle group with the big compound exercises once per week. Have a 10 minute warmup before you begin your workout.',
+--45,1,3,1,3)
 
 
 
@@ -516,7 +569,7 @@ values ('Chest & Triceps',
 ---PREDEFINED WORKOUTS--------------------------------------
 select * from ExerciseWorkout
 select * from Exercises where CategoryId = 4
-select * from ExerciseCategory
+
 
 -- EASY WORKOUT
 -- DAY 1
@@ -562,21 +615,191 @@ insert into ExerciseWorkout
 values(38,3,'10','3','',0)
 
 --INTERMEDIATE WORKOUT
+-- DAY 1 CHEST & BICEPS ID 4
+--reps sets descript weight id
+insert into ExerciseWorkout
+values(1,4,'8-10',4,'Form over weight!',0)
+insert into ExerciseWorkout
+values(5,4,'8',3,'Have your bench at 30 degree angle!',0)
+insert into ExerciseWorkout
+values(10,4,'8',3,'',0)
 
--- DAY 1
--- DAY 2
--- DAY 3
+insert into ExerciseWorkout
+values(29,4,'8',3,'',0)
+insert into ExerciseWorkout
+values(25,4,'8',3,'',0)
+insert into ExerciseWorkout
+values(30,4,'8',3,'',0)
+
+-- DAY 2 LEGS id 5
+-------------
+insert into ExerciseWorkout
+values(108,5,'8',3,'',0)
+insert into ExerciseWorkout
+values(115,5,'8',3,'',0)
+
+insert into ExerciseWorkout
+values(99,5,'10',3,'Keep your back straight!',0)
+insert into ExerciseWorkout
+values(109,5,'8',3,'Never fully extend your knees!',0)
+insert into ExerciseWorkout
+values(114,5,'8',3,'',0)
+
+insert into ExerciseWorkout
+values(131,5,'15,12,10,8',4,'',0)
+
+-- DAY 3 BACk id 6
+
+insert into ExerciseWorkout
+values(85,6,'Warm up',2,'',0)
+insert into ExerciseWorkout
+values(93,6,'8',3,'',0)
+insert into ExerciseWorkout
+values(95,6,'8',3,'',0)
+insert into ExerciseWorkout
+values(87,6,'8',3,'Each hand 8 repetitions per set!',0)
+insert into ExerciseWorkout
+values(83,6,'8',3,'Chest out, back straight, chin up!',0)
+
+-- DAY 4 SHOULDERS AND TRICEPS id 7
+
+insert into ExerciseWorkout
+values(37,7,'Warm up',2,'',0)
+insert into ExerciseWorkout
+values(36,7,'8',3,'',0)
+insert into ExerciseWorkout
+values(47,7,'8',3,'Lift to eye level height!',0)
+insert into ExerciseWorkout
+values(40,7,'8',3,'',0)
+
+insert into ExerciseWorkout
+values(22,7,'8',3,'',0)
+insert into ExerciseWorkout
+values(14,7,'8',3,'',0)
+insert into ExerciseWorkout
+values(17,7,'8',3,'',0)
+
 
 --ADVANCED WORKOUT
--- DAY 1
--- DAY 2
--- DAY 3
+-- DAY 1 id 8 Chest
+insert into ExerciseWorkout
+values(5,8,'8-10',4,'',0)
+insert into ExerciseWorkout
+values(10,8,'12',4,'',0)
+insert into ExerciseWorkout
+values(1,8,'8-10',4,'',0)
+insert into ExerciseWorkout
+values(12,8,'15',3,'',0)
+insert into ExerciseWorkout
+values(7,8,'10',3,'',0)
+insert into ExerciseWorkout
+values(8,8,'15-20',3,'',0)
+
+-- DAY 2 id 9
+insert into ExerciseWorkout
+values(85,9,'10',4,'',0)
+insert into ExerciseWorkout
+values(93,9,'8',4,'',0)
+insert into ExerciseWorkout
+values(97,9,'12',4,'',0)
+insert into ExerciseWorkout
+values(91,9,'8',4,'Both hands once per set!',0)
+insert into ExerciseWorkout
+values(88,9,'10',3,'',0)
+insert into ExerciseWorkout
+values(90,9,'15',3,'',0)
+
+-- DAY 3 id 10
+insert into ExerciseWorkout
+values(39,10,'12-15',4,'',0)
+insert into ExerciseWorkout
+values(37,10,'10-12',4,'',0)
+insert into ExerciseWorkout
+values(41,10,'8-10',4,'',0)
+insert into ExerciseWorkout
+values(47,10,'8-10',4,'',0)
+insert into ExerciseWorkout
+values(44,10,'15',3,'',0)
+insert into ExerciseWorkout
+values(48,10,'12-15',4,'',0)
 
 
+-- DAY 4 id 11
+
+insert into ExerciseWorkout
+values(28,11,'10-12',4,'',0)
+insert into ExerciseWorkout
+values(34,11,'10-12',3,'',0)
+insert into ExerciseWorkout
+values(35,11,'12-15',4,'',0)
+insert into ExerciseWorkout
+values(26,11,'10',4,'',0)
+insert into ExerciseWorkout
+values(15,11,'15',4,'',0)
+insert into ExerciseWorkout
+values(17,11,'15-20',4,'',0)
+insert into ExerciseWorkout
+values(18,11,'12-15',3,'',0)
+
+-- DAY 5 id 12
+insert into ExerciseWorkout
+values(109,12,'10-12',4,'',0)
+insert into ExerciseWorkout
+values(99,12,'8-10',4,'',0)
+insert into ExerciseWorkout
+values(114,12,'15',3,'',0)
+insert into ExerciseWorkout
+values(104,12,'10',4,'',0)
+insert into ExerciseWorkout
+values(115,12,'15',3,'',0)
+insert into ExerciseWorkout
+values(131,12,'20',3,'',0)
+
+select * from Workouts
+select * from ExerciseCategories
+select * from ExerciseWorkout
+select * from Exercises where Exercises.CategoryId = 7 or Exercises.CategoryId = 8 or Exercises.CategoryId = 9
+--------------------------------------------------------------------------
 --CARDIO
 --BEGGINER WORKOUT
+--DAY 1 id 13
+insert into ExerciseWorkout
+values(148,13,'15 min',1,'',0)
+insert into ExerciseWorkout
+values(145,13,'5 min',1,'',0)
+insert into ExerciseWorkout
+values(140,13,'5 min',1,'',0)
+
 --INTERMEDIATE WORKOUT
---ADVANCED WORKOUT
+--Day 2 id 14
+insert into ExerciseWorkout
+values(148,14,'20 min',1,'',0)
+insert into ExerciseWorkout
+values(145,14,'5 min',1,'',0)
+insert into ExerciseWorkout
+values(140,14,'5 min',1,'',0)
+insert into ExerciseWorkout
+values(143,14,'5 min',1,'',0)
+insert into ExerciseWorkout
+values(144,14,'5 min',1,'',0)
+--ADVANCED WORKOUT 15
+insert into ExerciseWorkout
+values(148,15,'15 min',1,'',0)
+insert into ExerciseWorkout
+values(146,15,'5 min',1,'',0)
+insert into ExerciseWorkout
+values(140,15,'10 min',1,'',0)
+insert into ExerciseWorkout
+values(147,15,'5 min',1,'',0)
+insert into ExerciseWorkout
+values(139,15,'5 min',1,'',0)
+insert into ExerciseWorkout
+values(149,15,'10 min',1,'',0)
+insert into ExerciseWorkout
+values(142,15,'5 min',1,'',0)
+insert into ExerciseWorkout
+values(144,15,'5 min',1,'',0)
+
 
 
 
