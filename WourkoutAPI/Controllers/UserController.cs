@@ -38,9 +38,9 @@ namespace WourkoutAPI.Controllers
 		{
 			var user = _apiDbContext.Users.FirstOrDefault(u => u.Id == userId);
 
-			if (user == null) 
+			if (user == null)
 				return NotFound("User not found!");
-			
+
 			return Ok(user);
 		}
 
@@ -70,7 +70,7 @@ namespace WourkoutAPI.Controllers
 			else return StatusCode(StatusCodes.Status400BadRequest);
 		}
 
-		
+
 
 		// We can find user by reading account id from JWT token
 		// DELETE: api/ApiWithActions/5
@@ -98,7 +98,7 @@ namespace WourkoutAPI.Controllers
 		[AllowAnonymous]
 		[HttpPost("[action]")]
 		public async Task<IActionResult> Register([FromBody] RegistrationView view)
-		   {
+		{
 			var account = new Account();
 			var user = new User();
 
@@ -111,14 +111,12 @@ namespace WourkoutAPI.Controllers
 
 			// If user account already exists
 			if (existingAccount.UserName != null && existingAccount.UserName == view.Username)
-			{
-				//return StatusCode(StatusCodes.Status409Conflict,"Username already exists!");
 				return Conflict("Username already exists!");
-			}
 
 			// Account information
 			account.UserName = view.Username;
-			account.Password = view.Password;
+			var enchancedHashedPassword = BCrypt.Net.BCrypt.EnhancedHashPassword(view.Password, hashType: BCrypt.Net.HashType.SHA384);
+			account.Password = enchancedHashedPassword;
 
 			// User information
 			user.Name = view.Name;
@@ -182,12 +180,10 @@ namespace WourkoutAPI.Controllers
 		private Task<bool> CheckUserCredentials(Account account, string password)
 		{
 			var acc = _apiDbContext.Accounts.FirstOrDefault(a => a.UserName == account.UserName);
-			if (acc.UserName != null)
+			if (acc != null)
 			{
-				if (acc.Password == password)
-				{
-					return Task.FromResult(true);
-				}
+				var verify = BCrypt.Net.BCrypt.EnhancedVerify(password, acc.Password, BCrypt.Net.HashType.SHA384);
+				if (verify) return Task.FromResult(true);
 			}
 			return Task.FromResult(false);
 		}
@@ -215,5 +211,22 @@ namespace WourkoutAPI.Controllers
 
 			return new JwtSecurityTokenHandler().WriteToken(token);
 		}
+
+		//[AllowAnonymous]
+		//[HttpPost("[action]/{password}")]
+		//public string GenerateHashTest(string password)
+		//{
+		//	var enchancedHashedPassword = BCrypt.Net.BCrypt.EnhancedHashPassword(password, hashType: BCrypt.Net.HashType.SHA384);
+		//	return enchancedHashedPassword;
+		//}
+
+		//[AllowAnonymous]
+		//[HttpPost("[action]/{password}")]
+		//public string VerifyHashedPassword(string password)
+		//{
+		//	var enchancedHashedPassword = BCrypt.Net.BCrypt.EnhancedHashPassword(password, hashType: BCrypt.Net.HashType.SHA384);
+		//	var verify = BCrypt.Net.BCrypt.EnhancedVerify(password, enchancedHashedPassword, BCrypt.Net.HashType.SHA384);
+		//	return verify ? "Verified" : "Not verified";
+		//}
 	}
 }

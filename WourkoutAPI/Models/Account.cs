@@ -13,13 +13,13 @@ namespace WourkoutAPI.Models
 		[StringLength(50)]
 		public string UserName { get; set; }
 		[Required]
-		[StringLength(50)]
+		[StringLength(60)]
 		public string Password { get; set; }
-		[StringLength(500)]
-		public string PasswordHash { get; set; }
-		//[Required]
-		[StringLength(50)]
-		public string Salt { get; set; }
+		//[StringLength(500)]
+		//public string PasswordHash { get; set; }
+		////[Required]
+		//[StringLength(50)]
+		//public string Salt { get; set; }
 		public virtual User User { get; set; }
 	}
 }
